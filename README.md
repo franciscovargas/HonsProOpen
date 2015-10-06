@@ -1,7 +1,10 @@
 # HonsProOpen
-Open sourced research and files for dissertation for FA and ML combined methods.
+
+Open sourced research and files for dissertation for FA and ML combined methods. FA is aimed to be used for cyclic pattern recognition and ML for classification and maybe some unsupervised methods to gain insights.
 
 # Relevant open data sources:
+
+All relevant data sets in this file are timeseries based data sets.
 
 ## Accelerometer based data:
 
