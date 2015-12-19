@@ -50,6 +50,7 @@ def LMS_calc(t, x, alpha=1):
 	print std_M_r
 	print len(std_M_r)
 	print min(std_M_r)
+	return [i for i, x in enumerate(std_M_r) if x == 0.0]
 
 
 
@@ -65,8 +66,9 @@ def main():
 	plt.plot(x, y, 'b')
 	plt.plot(x , least_squares(x, y), 'r')
 	remove_line = y - least_squares(x, y)
-	LMS_calc(x, y)
-	plt.plot(x, remove_line, 'y')
+	test = LMS_calc(x, y)
+	plt.plot(range(len(x)), remove_line, 'y')
+	plt.plot(test, [0.11 for i in range(len(test))], 'go')
 	plt.show()
 
 if __name__ == "__main__":
