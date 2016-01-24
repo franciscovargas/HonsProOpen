@@ -119,49 +119,15 @@ class ExerciseDataProvider:
 if  __name__ == "__main__":
 	from sklearn.neural_network.multilayer_perceptron import MLPClassifier
 	import sys
-	import warnings
-	warnings.filterwarnings("ignore", category=DeprecationWarning)
-	# bbbb
-	mode = sys.argv[1]
-	library = sys.argv[2]
-	if library != 'mine':
-		if mode == 'train':
-			print "training"
-			obj = ExerciseDataProvider(".")
-			X = obj.x[:,0:125]
-			y = obj.t
-			Xt = obj.xt[:,0:125]
-			yt = obj.tt
-			print "input vec shape: ", X.shape
-			# print y.shape
-			# print X.shape[-1]
-			clf_t = MLPClassifier(algorithm='l-bfgs',
-			                      alpha=1e-5,
-				     			  hidden_layer_sizes=(X.shape[-1], 19),
-								  random_state=1,
-								  spectral_mode='fft')
-			clf_t.fit(X, y)
 
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'wb') as m:
-				p.dump((clf_t, Xt, yt) , m)
+	obj = ExerciseDataProvider(".")
+	X = obj.x[:,0:125*4]
+	y = obj.t
+	Xt = obj.xt[:,0:125*4]
+	yt = obj.tt
 
-		else:
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'rb') as m:
-				clf, Xt, yt = p.load(m)
-			y2 = clf.predict(Xt)
-			print clf.coefs_[0].shape #.shape
-			print y2, yt
-			print len(y2), len(yt)
-			acc = sum(y2==yt) / float(len(y2))
-			print acc
-	    #"""
-	else:
-		if mode == 'train':
-			print "training"
-			obj = ExerciseDataProvider(".")
-			X = obj.x[:,0:125]
-			y = obj.t
-			Xt = obj.xt[:,0:125]
-			yt = obj.tt
-		else:
-			pass
+	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_trainr.pkl', 'wb') as f:
+		p.dump((X,y), f)
+
+	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_validr.pkl', 'wb') as f:
+		p.dump((Xt,yt), f)

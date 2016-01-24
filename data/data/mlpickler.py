@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import numpy as np
 from os import listdir
 from os.path import isfile, join
@@ -7,14 +6,12 @@ from copy import deepcopy
 from itertools import chain
 import cPickle as p
 
-# /afs/inf.ed.ac.uk/user/s12/s1235260/.local/lib/python2.7/site-packages/sklearn/neural_network/
-# model3.pkl is the current benchmark with 0.93475877193 acc
+
 class ExerciseDataProvider:
 	"""
 	The following data provider is here to parse
 	the tree-folder styled data set in to a dictionary
 	which can be then used as a proper training set.
-
 	# yoloswags
 	"""
 
@@ -45,7 +42,7 @@ class ExerciseDataProvider:
 				 base_path="."):
 		self.base_path = base_path
 		self.data_dict = self.get_data_dict()
-		self.x , self.t, self.xt, self.tt = self.p()
+		self.x , self.t = self.p()
 		# ((self.x , self.t),(self.xt , self.tt)) = self.prepare_train_set()
 
 	def p(self):
@@ -56,17 +53,7 @@ class ExerciseDataProvider:
 		T = np.array(map(lambda x: x[1],
 		             self.data_dict.values())).\
 					 reshape(-1)
-		pr = np.random.permutation(len(X))
-		T = T[pr]
-		X = X[pr]
-
-		percent = int(len(X)*0.8)
-		Xt = X[percent:, :]
-		X = X[:percent, :]
-		Tt = T[percent:]
-		T = T[:percent]
-
-		return X, T, Xt, Tt
+		return X, T
 
 
 	def get_data_dict(self):
@@ -118,50 +105,10 @@ class ExerciseDataProvider:
 
 if  __name__ == "__main__":
 	from sklearn.neural_network.multilayer_perceptron import MLPClassifier
-	import sys
-	import warnings
-	warnings.filterwarnings("ignore", category=DeprecationWarning)
-	# bbbb
-	mode = sys.argv[1]
-	library = sys.argv[2]
-	if library != 'mine':
-		if mode == 'train':
-			print "training"
-			obj = ExerciseDataProvider(".")
-			X = obj.x[:,0:125]
-			y = obj.t
-			Xt = obj.xt[:,0:125]
-			yt = obj.tt
-			print "input vec shape: ", X.shape
-			# print y.shape
-			# print X.shape[-1]
-			clf_t = MLPClassifier(algorithm='l-bfgs',
-			                      alpha=1e-5,
-				     			  hidden_layer_sizes=(X.shape[-1], 19),
-								  random_state=1,
-								  spectral_mode='fft')
-			clf_t.fit(X, y)
 
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'wb') as m:
-				p.dump((clf_t, Xt, yt) , m)
+	obj = ExerciseDataProvider(".")
+	X = obj.x
+	y = obj.t
 
-		else:
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'rb') as m:
-				clf, Xt, yt = p.load(m)
-			y2 = clf.predict(Xt)
-			print clf.coefs_[0].shape #.shape
-			print y2, yt
-			print len(y2), len(yt)
-			acc = sum(y2==yt) / float(len(y2))
-			print acc
-	    #"""
-	else:
-		if mode == 'train':
-			print "training"
-			obj = ExerciseDataProvider(".")
-			X = obj.x[:,0:125]
-			y = obj.t
-			Xt = obj.xt[:,0:125]
-			yt = obj.tt
-		else:
-			pass
+	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/hons/HonsProOpen/MLPHonoursExtension/data/ACL.pkl', 'wb') as f:
+		p.dump((X,y), f)
