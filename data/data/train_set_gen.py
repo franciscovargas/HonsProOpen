@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import numpy as np
 from os import listdir
 from os.path import isfile, join
@@ -125,23 +126,25 @@ if  __name__ == "__main__":
 	if mode == 'train':
 		print "training"
 		obj = ExerciseDataProvider(".")
-		X = obj.x
+		X = obj.x[:,0:125]
 		y = obj.t
-		Xt = obj.xt
+		Xt = obj.xt[:,0:125]
 		yt = obj.tt
-		# print X.shape
+		print "input vec shape: ", X.shape
 		# print y.shape
+		# print X.shape[-1]
 		clf_t = MLPClassifier(algorithm='l-bfgs',
 		                      alpha=1e-5,
 			     			  hidden_layer_sizes=(X.shape[-1], 19),
-							  random_state=1)
+							  random_state=1,
+							  spectral_mode='fft')
 		clf_t.fit(X, y)
 
-		with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec.pkl', 'wb') as m:
-			p.dump((clf, Xt, yt) , m)
+		with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'wb') as m:
+			p.dump((clf_t, Xt, yt) , m)
 
 	else:
-		with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model3.pkl', 'rb') as m:
+		with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'rb') as m:
 			clf, Xt, yt = p.load(m)
 		y2 = clf.predict(Xt)
 		print clf.coefs_[0].shape #.shape

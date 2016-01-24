@@ -1,3 +1,6 @@
 [submodule "scikit-learn"]
 	path = scikit-learn
 	url = git@github.com:franciscovargas/scikit-learn.git
+[submodule "MLPHonoursExtension"]
+	path = MLPHonoursExtension
+	url = https://github.com/franciscovargas/MLPHonoursExtension.git
