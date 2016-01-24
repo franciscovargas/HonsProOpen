@@ -6,7 +6,8 @@ from copy import deepcopy
 from itertools import chain
 import cPickle as p
 
-
+# /afs/inf.ed.ac.uk/user/s12/s1235260/.local/lib/python2.7/site-packages/sklearn/neural_network/
+# model3.pkl is the current benchmark with 0.93475877193 acc
 class ExerciseDataProvider:
 	"""
 	The following data provider is here to parse
@@ -43,7 +44,7 @@ class ExerciseDataProvider:
 				 base_path="."):
 		self.base_path = base_path
 		self.data_dict = self.get_data_dict()
-		self.x , self.t = self.p()
+		self.x , self.t, self.xt, self.tt = self.p()
 		# ((self.x , self.t),(self.xt , self.tt)) = self.prepare_train_set()
 
 	def p(self):
@@ -54,7 +55,17 @@ class ExerciseDataProvider:
 		T = np.array(map(lambda x: x[1],
 		             self.data_dict.values())).\
 					 reshape(-1)
-		return X, T
+		pr = np.random.permutation(len(X))
+		T = T[pr]
+		X = X[pr]
+
+		percent = int(len(X)*0.8)
+		Xt = X[percent:, :]
+		X = X[:percent, :]
+		Tt = T[percent:]
+		T = T[:percent]
+
+		return X, T, Xt, Tt
 
 
 	def get_data_dict(self):
@@ -107,20 +118,34 @@ class ExerciseDataProvider:
 if  __name__ == "__main__":
 	from sklearn.neural_network.multilayer_perceptron import MLPClassifier
 
+	"""
 	obj = ExerciseDataProvider(".")
 	X = obj.x
 	y = obj.t
+	Xt = obj.xt
+	yt = obj.tt
 	# print X.shape
 	# print y.shape
+	"""
+	"""
+	clf.fit(X, y)
 
-	# clf = MLPClassifier(algorithm='l-bfgs',
-	#                     alpha=1e-5,
-	# 					hidden_layer_sizes=(100, 19),
-	# 					random_state=1)
-	# clf.fit(X, y)
-	with open('model.pkl', 'rb') as m:
-		clf = p.load( m)
-	y2 = clf.predict(X)
-	print y2, y
-	acc = sum(y2==y) / float(len(y2))
+	with open('model3.pkl', 'wb') as m:
+		p.dump((clf, Xt, yt) , m)
+    """
+
+	clf_t = MLPClassifier(algorithm='l-bfgs',
+	                      alpha=1e-5,
+		     			  hidden_layer_sizes=(100, 19),
+						  random_state=1)
+	print clf_t.coefs_[0].shape
+	#"""
+	with open('model3.pkl', 'rb') as m:
+		clf, Xt, yt = p.load(m)
+	y2 = clf.predict(Xt)
+	print clf.coefs_[0].shape #.shape
+	print y2, yt
+	print len(y2), len(yt)
+	acc = sum(y2==yt) / float(len(y2))
 	print acc
+    #"""
