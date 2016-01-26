@@ -7,3 +7,6 @@
 [submodule "nolearn"]
 	path = nolearn
 	url = https://github.com/franciscovargas/nolearn.git
+[submodule "statsmodels"]
+	path = statsmodels
+	url = https://github.com/franciscovargas/statsmodels.git

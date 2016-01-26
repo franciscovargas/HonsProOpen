@@ -92,7 +92,7 @@ class ExerciseDataProvider:
 					ford = np.array(map(lambda x:map(float, x.split(",")),
 									fo.read().split("\n")[:-1]))
 					# print ford.shape
-					parsed_files.append(deepcopy(np.array(ford).ravel() ))
+					parsed_files.append(deepcopy(np.array(ford).T.ravel() ))
 			assert len(parsed_files) == len(files)
 			labl =  int(''.join((x for x in fold if x.isdigit())))
 			# print self.class_dict[fold]
@@ -123,7 +123,7 @@ if  __name__ == "__main__":
 	warnings.filterwarnings("ignore", category=DeprecationWarning)
 	# bbbb
 	mode = sys.argv[1]
-	library = sys.argv[2]
+	library = 'mine'
 	if library != 'mine':
 		if mode == 'train':
 			print "training"
@@ -142,11 +142,11 @@ if  __name__ == "__main__":
 								  spectral_mode='fft')
 			clf_t.fit(X, y)
 
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'wb') as m:
+			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec3.pkl', 'wb') as m:
 				p.dump((clf_t, Xt, yt) , m)
 
 		else:
-			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec2.pkl', 'rb') as m:
+			with open('/afs/inf.ed.ac.uk/user/s12/s1235260/model_spec3.pkl', 'rb') as m:
 				clf, Xt, yt = p.load(m)
 			y2 = clf.predict(Xt)
 			print clf.coefs_[0].shape #.shape

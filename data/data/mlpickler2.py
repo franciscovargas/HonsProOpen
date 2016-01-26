@@ -92,7 +92,7 @@ class ExerciseDataProvider:
 					ford = np.array(map(lambda x:map(float, x.split(",")),
 									fo.read().split("\n")[:-1]))
 					# print ford.shape
-					parsed_files.append(deepcopy(np.array(ford).ravel() ))
+					parsed_files.append(deepcopy(np.array(ford).T.ravel() ))
 			assert len(parsed_files) == len(files)
 			labl =  int(''.join((x for x in fold if x.isdigit())))
 			# print self.class_dict[fold]
@@ -121,13 +121,13 @@ if  __name__ == "__main__":
 	import sys
 
 	obj = ExerciseDataProvider(".")
-	X = obj.x[:,0:125*4]
+	X = obj.x
 	y = obj.t
-	Xt = obj.xt[:,0:125*4]
+	Xt = obj.xt
 	yt = obj.tt
 
-	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_trainr.pkl', 'wb') as f:
+	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_traina.pkl', 'wb') as f:
 		p.dump((X,y), f)
 
-	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_validr.pkl', 'wb') as f:
+	with open('/afs/inf.ed.ac.uk/user/s12/s1235260/ACL1_valida.pkl', 'wb') as f:
 		p.dump((Xt,yt), f)
