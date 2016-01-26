@@ -4,3 +4,6 @@
 [submodule "MLPHonoursExtension"]
 	path = MLPHonoursExtension
 	url = https://github.com/franciscovargas/MLPHonoursExtension.git
+[submodule "nolearn"]
+	path = nolearn
+	url = https://github.com/franciscovargas/nolearn.git
