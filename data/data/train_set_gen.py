@@ -5,8 +5,8 @@ from os.path import isfile, join
 import re
 from copy import deepcopy
 from itertools import chain
-import cPickle as p
 
+import cPickle as p
 # /afs/inf.ed.ac.uk/user/s12/s1235260/.local/lib/python2.7/site-packages/sklearn/neural_network/
 # model3.pkl is the current benchmark with 0.93475877193 acc
 class ExerciseDataProvider:
