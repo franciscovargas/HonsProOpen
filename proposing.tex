@@ -1,0 +1,66 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx,listings,mathtools} 
+
+\title{Motivation}
+\author{Francisco Vargas}
+\date{\today}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{Motivation}
+
+\subsection{Practical Motivation}
+
+This project was originally supposed to solve a real world problem for a local Edinburgh based company called IceRobotics.ltd .
+  \newline\newline
+  IceRobotics domain is in the livestock industry. Their main product is called the iceQube which is a 3 axes 6hz sample accelerometer that is attached to cattle in farm in order to monitor and manage cattle behaviour. 
+  \newline\newline
+  The company provides a set of basic statistical algorithms that attempt to detect health states of the animal such as oestrus or lameness. Since cattle are naturally animals of habit with recurring behavioural patterns at a daily and weekly basis thus a good postulate to tackle this classification problem seemed to view the data in the frequency domain and use these representations as a features for machine learning based algorithms.
+  
+ \subsubsection{Specific Tasks}
+ From a practical viewpoint I am interested in tackling the classification process in both a economically efficient and high performing solution. With high performing solution I mean that I wish to fit the model over a domain which represents the underlying dynamics (nature of data) correctly both from a theoretical modelling perspective and a good set of results in terms of accuracy, precision, recall , confidence and other metrics that asses good performance in an inference (learning) based method. Thus two very relevant seeming tasks that I will study are:
+ 
+ \subsubsection{Assessing Number of Devices to Use}
+ 
+ One question that one may ask. Is how many devices to use on each animal (for example one on each leg, total of 4). This question can be answered using methods from cooperative game theory. 
+\\ \\ 
+ In our scenario we interpret each device as a player (agent) and ask which cooperation are meaningful among the players available in the game (coalitional game). We can formally define such scenario in the following manner : 
+ 
+ 
+ 
+\begin{enumerate}
+\item  $Accelerometers= A_{c} = \{1, ... , n\}$,  (agents);
+\item  Coalitions: $\forall C \subset \mathbb{P}(A_{c})$,\; s.t. $\quad  (\mathbb{P}(A_{c}) \equiv 2^{A_{c}})$ ; 
+\item $G = A_{c}$ is the grand coalition;
+\item $\nu : \mathbb{P}(A_{c}) \rightarrow \mathbb{R}$ is the pay-off (utility) function of the game  s.t. $\nu(\varnothing) =0$ ($\nu$ could be the accuracy when classifying the test set) ; 
+\item a cooperative game is the pair $\Gamma = (A_{c}, \nu)$;
+\end{enumerate}
+
+\noindent
+{ Having set up such game mechanism we can ask questions such as:}
+
+
+\begin{enumerate}
+\item Which accelerometer placement contributes the most towards our modelling;
+\item Which coalitions (combinations of accelerometers) play the best together in our modelling task;
+\end{enumerate}
+ 
+
+
+
+\subsection{Theoretical Viewpoint}
+
+The theoretical motivation behind this project is to study and trial mathematical methods that can classify the state of a process that changes in time and exhibits periodic behaviour.
+\\ \\
+Due to the periodic 
+
+
+\end{document}
+
+
+
